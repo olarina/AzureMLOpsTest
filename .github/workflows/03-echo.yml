@@ -4,7 +4,7 @@ on:
   [pull_request]
 
 jobs:
-  train:
+  echojob:
     runs-on: ubuntu-latest
     steps:
     - name: Echo step
