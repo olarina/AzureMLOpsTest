@@ -10,10 +10,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 import mlflow
 
+
 # define functions
 def main(args):
-
-
     # read data
     df = get_csvs_df(args.training_data)
 
@@ -65,10 +64,9 @@ def parse_args():
     # return args
     return args
 
+
 # run script
 if __name__ == "__main__":
-
-
     # add space in logs
     print("\n\n")
     print("*" * 60)
