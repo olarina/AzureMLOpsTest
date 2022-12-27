@@ -1,4 +1,4 @@
-name: Trygger echo on pull request
+name: Trygger echo on pull request 2
 
 on:
   [pull_request]
