@@ -20,7 +20,7 @@ jobs:
     - name: Trigger Azure Machine Learning job
       run: |
         az ml job create --file src/job_prod.yml --resource-group mlopsgroup --workspace-name mlopsws --stream
-        JOB_NAME=$(az ml job list --query "[0].name" | tr -d '"')
+        JOB_NAME=$(az ml job list --resource-group mlopsgroup --workspace-name mlopsws --query "[0].name" | tr -d '"')
         az ml model create --name "diabetes-sklearn-mlflow-model" \
                    --type "mlflow_model" \
                    --path "azureml://jobs/$JOB_NAME/outputs/artifacts/model"
