@@ -1,0 +1,27 @@
+name: Model deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    environment: prod-env
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Trigger Azure Machine Learning job
+      run: |
+        az ml job create --file src/job_prod.yml --resource-group mlopsgroup --workspace-name mlopsws --stream
+        JOB_NAME=$(az ml job list --query "[0].name" | tr -d '"')
+        az ml model create --name "diabetes-sklearn-mlflow-model" \
+                   --type "mlflow_model" \
+                   --path "azureml://jobs/$JOB_NAME/outputs/artifacts/model"
+
